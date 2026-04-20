@@ -133,12 +133,44 @@ def walk_comments(nodes, advisor_key, parent_hash=None, parent_uuid=None):
 
 
 def fetch_doc(local_path):
-    """Refresh local raw.txt from the doc URL (GitHub Actions pull)."""
-    print(f"fetching {DOC_URL}")
-    req = urllib.request.Request(DOC_URL, headers={"User-Agent": "advisor-eval-sync"})
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        text = resp.read().decode("utf-8", errors="replace")
-    Path(local_path).write_text(text, encoding="utf-8")
+    """Refresh local raw.txt from the doc URL.
+
+    Retries a few times with backoff on rate-limit (429). If the doc refuses
+    to cooperate, we fall back to whatever raw.txt is already checked into
+    the repo so the sync can still run.
+    """
+    import time
+    print(f"fetching {DOC_URL}", flush=True)
+    delays = [0, 10, 30, 60]
+    last_err = None
+    for i, wait in enumerate(delays):
+        if wait:
+            print(f"  retry in {wait}s…", flush=True)
+            time.sleep(wait)
+        try:
+            req = urllib.request.Request(
+                DOC_URL,
+                headers={"User-Agent": "Mozilla/5.0 (advisor-eval-sync)"},
+            )
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                text = resp.read().decode("utf-8", errors="replace")
+            Path(local_path).write_text(text, encoding="utf-8")
+            print(f"  fetched {len(text)} chars", flush=True)
+            return
+        except urllib.error.HTTPError as e:
+            last_err = e
+            print(f"  attempt {i + 1}: HTTP {e.code}", flush=True)
+            if e.code != 429:
+                break  # only retry rate-limits
+        except Exception as e:
+            last_err = e
+            print(f"  attempt {i + 1}: {e}", flush=True)
+    # Fallback: use whatever raw.txt already exists.
+    if Path(local_path).exists():
+        print(f"WARN: using existing raw.txt ({Path(local_path).stat().st_size} bytes); "
+              f"last fetch error: {last_err}", flush=True)
+        return
+    raise RuntimeError(f"Could not fetch doc and no local raw.txt fallback: {last_err}")
 
 
 def main():
