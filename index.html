@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Advisor Eval 2026</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Advisor Eval 2026 <span class="muted">— map + comments</span></h1>
+  <div class="disclaimer">
+    <strong>Unverified anonymous community comments.</strong>
+    All content is aggregated from a public Google Doc and may contain rumors,
+    inaccuracies, or defamatory material. Entries are not endorsed or fact-checked.
+    NSFW / harassment-related content is hidden by default. For research / reference only.
+    <a href="https://docs.google.com/document/d/1-AtKUh-xE1CPRRDVlfPx1d42Trhr7F8qQIw69hP85Ds/preview" target="_blank" rel="noopener">Source doc</a>.
+  </div>
+</header>
+
+<main>
+  <section id="map-panel">
+    <div class="filter-row">
+      <label><input type="checkbox" id="show-black" checked> Red Flags (黑榜)</label>
+      <label><input type="checkbox" id="show-red" checked> Recommended (红榜)</label>
+      <label><input type="checkbox" id="reveal-nsfw"> Reveal NSFW by default</label>
+      <input type="search" id="q" placeholder="Search advisor or institution…" />
+    </div>
+    <div id="map"></div>
+  </section>
+
+  <section id="list-panel">
+    <div id="list-header">
+      <span id="count">—</span>
+      <button id="clear-filter" hidden>Clear institution filter</button>
+    </div>
+    <div id="advisor-list"></div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

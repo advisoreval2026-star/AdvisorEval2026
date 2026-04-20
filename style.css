@@ -1,0 +1,59 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0f1116; color: #d7dbe4; }
+
+.site-header { padding: 14px 20px 10px; background: #0b0d12; border-bottom: 1px solid #20242e; }
+.site-header h1 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
+.site-header .muted { color: #737a8b; font-weight: 400; font-size: 14px; }
+.disclaimer { font-size: 12.5px; color: #b8a96d; background: #231f0e; border: 1px solid #3a3418; padding: 8px 10px; border-radius: 6px; line-height: 1.45; }
+.disclaimer a { color: #d6c38d; }
+
+main { display: grid; grid-template-columns: minmax(520px, 1fr) minmax(400px, 520px); height: calc(100vh - 92px); }
+
+#map-panel { display: flex; flex-direction: column; border-right: 1px solid #20242e; }
+.filter-row { padding: 10px 14px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #20242e; background: #10131a; font-size: 13px; }
+.filter-row label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+#q { margin-left: auto; flex: 1 1 200px; min-width: 160px; padding: 5px 8px; background: #1a1e28; color: inherit; border: 1px solid #2a2f3c; border-radius: 5px; }
+
+#map { flex: 1; }
+
+#list-panel { display: flex; flex-direction: column; overflow: hidden; }
+#list-header { padding: 10px 14px; border-bottom: 1px solid #20242e; background: #10131a; display: flex; gap: 10px; align-items: center; font-size: 13px; color: #a7aebb; }
+#list-header button { background: #2b2f3d; color: #d7dbe4; border: 1px solid #3a3f4f; padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+#advisor-list { flex: 1; overflow-y: auto; padding: 10px 14px 40px; }
+
+.advisor-card { background: #161a23; border: 1px solid #252a37; border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+.advisor-card.highlight { border-color: #4c7dff; box-shadow: 0 0 0 2px #2e4894; }
+.advisor-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.advisor-name { font-size: 15.5px; font-weight: 600; color: #eaecf2; }
+.advisor-inst { font-size: 13px; color: #8c94a4; }
+.advisor-tag { font-size: 12px; color: #9da7ba; }
+.badge { font-size: 11px; padding: 1.5px 7px; border-radius: 10px; font-weight: 500; }
+.badge.black { background: #3a1d20; color: #ff8b8b; border: 1px solid #5a2429; }
+.badge.red { background: #1b2e1c; color: #83df87; border: 1px solid #2a4a2c; }
+.badge.both { background: #302a15; color: #e8c773; border: 1px solid #564a23; }
+.badge.unverified { background: #2b2820; color: #c9b988; border: 1px solid #4a4431; }
+.badge.region { background: #1b2430; color: #8faed1; border: 1px solid #2f405b; }
+
+.comments { list-style: none; padding: 0; margin: 8px 0 0; border-left: 2px solid #252a37; padding-left: 10px; }
+.comment { margin: 6px 0; font-size: 13.5px; line-height: 1.5; color: #cfd4df; }
+.comment-text { white-space: pre-wrap; word-break: break-word; }
+.comment-replies { margin-top: 4px; border-left: 2px solid #252a37; padding-left: 10px; }
+.comment-replies .comment { color: #a5adbd; font-size: 13px; }
+.comment-replies .comment-replies .comment { color: #878e9c; font-size: 12.5px; }
+
+.nsfw { background: #231217; border: 1px dashed #5a2429; border-radius: 6px; padding: 6px 8px; margin: 6px 0; }
+.nsfw[data-revealed="false"] .comment-text, .nsfw[data-revealed="false"] .comment-replies { filter: blur(5px); user-select: none; }
+.nsfw-reveal { font-size: 11.5px; color: #ff8b8b; cursor: pointer; margin-right: 6px; text-decoration: underline; background: none; border: 0; padding: 0; }
+
+.leaflet-container { background: #0b0d12; }
+.leaflet-popup-content-wrapper { background: #161a23; color: #d7dbe4; border: 1px solid #252a37; }
+.leaflet-popup-tip { background: #161a23; }
+.leaflet-popup-content { margin: 8px 12px; max-width: 260px; }
+.leaflet-popup-content a { color: #92b7ff; cursor: pointer; }
+
+.empty { color: #737a8b; font-size: 13px; font-style: italic; padding: 20px; text-align: center; }
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; grid-template-rows: 50vh 50vh; height: calc(100vh - 110px); }
+  #map-panel { border-right: 0; border-bottom: 1px solid #20242e; }
+}
