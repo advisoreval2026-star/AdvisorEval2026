@@ -25,8 +25,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import parse  # noqa: E402  — reuse parsing logic
 
-SUPABASE_URL = os.environ["SUPABASE_URL"].rstrip("/")
-SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
+from urllib.parse import urlparse
+
+_parsed = urlparse(os.environ["SUPABASE_URL"].strip())
+if not _parsed.scheme or not _parsed.netloc:
+    raise RuntimeError(
+        f"SUPABASE_URL looks malformed: {os.environ['SUPABASE_URL']!r}"
+    )
+# Strip any path/query — we only want the origin. PostgREST path is added below.
+SUPABASE_URL = f"{_parsed.scheme}://{_parsed.netloc}"
+SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"].strip()
 DOC_URL = os.environ.get(
     "DOC_URL",
     "https://docs.google.com/document/d/1-AtKUh-xE1CPRRDVlfPx1d42Trhr7F8qQIw69hP85Ds/export?format=txt",
