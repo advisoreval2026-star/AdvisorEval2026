@@ -96,9 +96,11 @@ alter table comments add column if not exists source   text    not null default 
 alter table comments add column if not exists nsfw     boolean not null default false;
 alter table comments add column if not exists doc_hash text;
 
+-- Non-partial unique index so PostgREST can use it as ON CONFLICT arbiter.
+-- Postgres treats each NULL as distinct, so user comments with null doc_hash
+-- still coexist.
 create unique index if not exists comments_doc_hash_uidx
-  on comments(doc_hash)
-  where doc_hash is not null;
+  on comments(doc_hash);
 create index if not exists comments_source_idx on comments(source);
 
 -- ---------- Force PostgREST to re-read the schema ----------

@@ -29,8 +29,10 @@ alter table comments add column if not exists nsfw     boolean not null default 
 alter table comments add column if not exists doc_hash text;   -- deterministic hash for doc-sourced comments
 
 -- Deterministic hash makes the sync idempotent: re-running inserts nothing new.
+-- Non-partial unique index so it can be used as the ON CONFLICT arbiter by
+-- PostgREST. NULL doc_hash values (user comments) do NOT violate uniqueness —
+-- Postgres treats each NULL as distinct.
 create unique index if not exists comments_doc_hash_uidx
-  on comments(doc_hash)
-  where doc_hash is not null;
+  on comments(doc_hash);
 
 create index if not exists comments_source_idx on comments(source);
