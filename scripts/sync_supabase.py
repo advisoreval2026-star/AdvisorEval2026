@@ -49,9 +49,21 @@ def sb_request(method, path, body=None, params=None, prefer="return=representati
     if prefer:
         headers["Prefer"] = prefer
     req = urllib.request.Request(url, data=data, method=method, headers=headers)
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        raw = resp.read()
-        return json.loads(raw) if raw else None
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = resp.read()
+            return json.loads(raw) if raw else None
+    except urllib.error.HTTPError as e:
+        body_txt = ""
+        try:
+            body_txt = e.read().decode("utf-8", errors="replace")
+        except Exception:
+            pass
+        print(
+            f"HTTP {e.code} on {method} {url}\n  response: {body_txt[:500]}",
+            flush=True,
+        )
+        raise
 
 
 def upsert_advisor(row):
