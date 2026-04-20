@@ -5,6 +5,9 @@ on:
     - cron: "0 6 * * *"   # 06:00 UTC daily
   workflow_dispatch:       # also runnable manually from the Actions tab
 
+permissions:
+  contents: write          # needed so the commit-back step can push
+
 concurrency:
   group: sync-doc
   cancel-in-progress: true
@@ -13,18 +16,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Run sync
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         working-directory: scripts
-        run: python3 sync_supabase.py
+        run: python3 -u sync_supabase.py
 
       - name: Commit updated raw.txt if doc changed
         run: |
