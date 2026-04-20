@@ -162,11 +162,7 @@ def main():
             "list_type": a.get("list_type") or "black",
             "tag": (a.get("tag") or "")[:500] or None,
         }
-        try:
-            upsert_advisor(advisor_row)
-        except Exception as e:
-            print(f"ERR upsert advisor {key}: {e}")
-            continue
+        upsert_advisor(advisor_row)
         walk_comments(a.get("comments", []), key)
     print("sync complete")
 
