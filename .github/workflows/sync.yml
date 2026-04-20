@@ -1,0 +1,39 @@
+name: sync-doc-to-supabase
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC daily
+  workflow_dispatch:       # also runnable manually from the Actions tab
+
+concurrency:
+  group: sync-doc
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        working-directory: scripts
+        run: python3 sync_supabase.py
+
+      - name: Commit updated raw.txt if doc changed
+        run: |
+          git config user.name  "advisor-eval-bot"
+          git config user.email "advisoreval2026@users.noreply.github.com"
+          if ! git diff --quiet -- scripts/raw.txt scripts/advisors.json; then
+            git add scripts/raw.txt scripts/advisors.json
+            git commit -m "chore: refresh doc snapshot $(date -u +%Y-%m-%d)"
+            git push
+          else
+            echo "No doc changes."
+          fi
