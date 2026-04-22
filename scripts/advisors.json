@@ -1,5 +1,79 @@
 [
   {
+    "institution_key": "Google",
+    "institution": "Google",
+    "advisor": "doc更丝滑，其他人无法删除你的评论",
+    "tag": "https://append.page/p/advisors （新的匿名评论平台，比",
+    "region": "Other",
+    "lat": 37.422,
+    "lon": -122.0841,
+    "list_type": "red",
+    "comments": [
+      {
+        "text": "PS. 本文档是匿名文档，请随意补充和修改；",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "某些黑榜的Prof也可以同时出现在红榜，请两个榜同时参考综合评估。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "如果你认为下面红榜的信息有误，也可以补充Rebuttal",
+        "replies": [
+          {
+            "text": "使用其他颜色",
+            "replies": [],
+            "nsfw": false
+          }
+        ],
+        "nsfw": false
+      },
+      {
+        "text": "参考评估维度：",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "人品与边界：是否尊重学生，是否讲信用，是否滥用权力。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "指导与判断力：是否真的能给 research guidance，是否会频繁推翻方向。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "工作方式：是否过度 push，是否把学生当工具人。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "资源与回报：funding、算力、署名、推荐信、职业发展是否公平。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "组内生态：quit 率、转组率、学生私下口碑，往往比官网介绍更真实。",
+        "replies": [],
+        "nsfw": false
+      },
+      {
+        "text": "红榜List :",
+        "replies": [
+          {
+            "text": "请大家更新下面之前也在这里补充一下方便后人引用",
+            "replies": [],
+            "nsfw": false
+          }
+        ],
+        "nsfw": false
+      }
+    ]
+  },
+  {
     "institution_key": "PKU",
     "institution": "Peking University",
     "advisor": "Shanghang Zhang",
